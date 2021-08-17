@@ -47,7 +47,7 @@ class _PaymentPageState extends State<PaymentPage> {
       app: app,
       receiverUpiId: "ajbaptist18-2@okaxis",
       receiverName: 'John Baptist',
-      transactionRefId: 'FOR TESTING PURPOSE',
+      transactionRefId: '8965987956',
       transactionNote: 'FOR TESTING PURPOSE',
       amount: amount,
     );
@@ -138,7 +138,7 @@ class _PaymentPageState extends State<PaymentPage> {
           Text("$title: ", style: header),
           Flexible(
               child: Text(
-            body,
+            body.toString().toUpperCase(),
             style: value,
           )),
         ],
@@ -171,18 +171,13 @@ class _PaymentPageState extends State<PaymentPage> {
                         _upiErrorHandler(snapshot.error.runtimeType),
                         textAlign: TextAlign.center,
                         style: header,
-                      ), // Print's text message on screen
+                      ),
                     );
                   }
 
                   UpiResponse _upiResponse = snapshot.data!;
-
                   String txnId = _upiResponse.transactionId ?? 'NOT FOUND';
-                  String resCode = _upiResponse.responseCode ?? 'NOT FOUND';
-                  String txnRef = _upiResponse.transactionRefId ?? 'NOT FOUND';
                   String status = _upiResponse.status ?? 'NOT FOUND';
-                  String approvalRef =
-                      _upiResponse.approvalRefNo ?? 'NOT FOUND';
                   _checkTxnStatus(status);
 
                   return Padding(
@@ -191,10 +186,9 @@ class _PaymentPageState extends State<PaymentPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         displayTransactionData('Transaction Id', txnId),
-                        displayTransactionData('Response Code', resCode),
-                        displayTransactionData('Reference Id', txnRef),
+                        displayTransactionData(
+                            'Ref ID:', _upiResponse.transactionId.toString()),
                         displayTransactionData('Status', status.toUpperCase()),
-                        displayTransactionData('Approval No', approvalRef),
                       ],
                     ),
                   );
