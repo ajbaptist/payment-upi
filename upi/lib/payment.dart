@@ -126,9 +126,9 @@ class _PaymentPageState extends State<PaymentPage> {
                     );
                   }
 
-                  UpiResponse _upiResponse = snapshot.data!;
-                  String txnId = _upiResponse.transactionId ?? 'NOT FOUND';
-                  String status = _upiResponse.status ?? 'NOT FOUND';
+                  UpiResponse appRes = snapshot.data!;
+                  String txnId = appRes.transactionId ?? 'NOT FOUND';
+                  String status = appRes.status ?? 'NOT FOUND';
 
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -137,7 +137,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       children: <Widget>[
                         displayTransactionData('Transaction Id:', txnId),
                         displayTransactionData(
-                            'Ref ID:', _upiResponse.transactionId.toString()),
+                            'Ref ID:', appRes.transactionId.toString()),
                         displayTransactionData('Status:', status.toUpperCase()),
                       ],
                     ),

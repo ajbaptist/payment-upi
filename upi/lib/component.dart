@@ -12,7 +12,7 @@ displayTransactionData(title, body) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("$title: ".toUpperCase(), style: header),
+        Text(title.toUpperCase(), style: header),
         Flexible(
             child: Text(
           body.toString().toUpperCase(),
