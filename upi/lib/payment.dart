@@ -190,7 +190,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   );
                 } else
                   return Center(
-                    child: Text(''),
+                    child: Text('TRY AGAIN'),
                   );
               },
             ),
