@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:upi/component.dart';
 import 'package:upi/main.dart';
-// import 'package:upi/main.dart';
 import 'package:upi_india/upi_india.dart';
 
 class Payment extends StatefulWidget {
@@ -53,7 +52,7 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
-  Widget displayUpiApps() {
+  displayUpiApps() {
     if (apps == null)
       return Center(child: CircularProgressIndicator());
     else if (apps!.length == 0)
@@ -71,8 +70,8 @@ class _PaymentPageState extends State<PaymentPage> {
               _transaction = initiateTransaction(app, amount);
               setState(() {});
             },
-            child: Container(
-              height: 100,
+            child: SizedBox(
+              height: 200,
               width: 100,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -81,11 +80,15 @@ class _PaymentPageState extends State<PaymentPage> {
                     borderRadius: BorderRadius.circular(60),
                     child: Image.memory(
                       app.icon,
-                      height: 60,
-                      width: 60,
+                      height: 80,
+                      width: 80,
                     ),
                   ),
-                  Text(app.name.toUpperCase()),
+                  Text(
+                    app.name.toUpperCase(),
+                    style: TextStyle(
+                        color: Colors.teal, fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
             ),
@@ -123,23 +126,6 @@ class _PaymentPageState extends State<PaymentPage> {
       default:
         print('Received an Unknown transaction status');
     }
-  }
-
-  Widget displayTransactionData(title, body) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("$title: ".toUpperCase(), style: header),
-          Flexible(
-              child: Text(
-            body.toString().toUpperCase(),
-            style: value,
-          )),
-        ],
-      ),
-    );
   }
 
   @override
