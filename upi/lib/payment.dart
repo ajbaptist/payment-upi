@@ -97,37 +97,6 @@ class _PaymentPageState extends State<PaymentPage> {
       );
   }
 
-  String _upiErrorHandler(error) {
-    switch (error) {
-      case UpiIndiaAppNotInstalledException:
-        return 'Requested app not installed on device';
-      case UpiIndiaUserCancelledException:
-        return 'You cancelled the transaction';
-      case UpiIndiaNullResponseException:
-        return 'Requested app didn\'t return any response';
-      case UpiIndiaInvalidParametersException:
-        return 'Requested app cannot handle the transaction';
-      default:
-        return 'YOU ARE CANCELED THE PAYMENT TRANSECTION';
-    }
-  }
-
-  void _checkTxnStatus(String status) {
-    switch (status) {
-      case UpiPaymentStatus.SUCCESS:
-        print('Transaction Successful');
-        break;
-      case UpiPaymentStatus.SUBMITTED:
-        print('Transaction Submitted');
-        break;
-      case UpiPaymentStatus.FAILURE:
-        print('Transaction Failed');
-        break;
-      default:
-        print('Received an Unknown transaction status');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,7 +119,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   if (snapshot.hasError) {
                     return Center(
                       child: Text(
-                        _upiErrorHandler(snapshot.error.runtimeType),
+                        'ERROR OCCURED',
                         textAlign: TextAlign.center,
                         style: header,
                       ),
@@ -160,7 +129,6 @@ class _PaymentPageState extends State<PaymentPage> {
                   UpiResponse _upiResponse = snapshot.data!;
                   String txnId = _upiResponse.transactionId ?? 'NOT FOUND';
                   String status = _upiResponse.status ?? 'NOT FOUND';
-                  _checkTxnStatus(status);
 
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
