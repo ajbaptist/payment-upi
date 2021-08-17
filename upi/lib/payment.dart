@@ -25,7 +25,7 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  Future<UpiResponse>? _transaction;
+  Future<UpiResponse>? transDetail;
   UpiIndia upiIndia = UpiIndia();
   List<UpiApp>? apps;
 
@@ -67,7 +67,7 @@ class _PaymentPageState extends State<PaymentPage> {
         children: apps!.map<Widget>((UpiApp app) {
           return GestureDetector(
             onTap: () {
-              _transaction = initiateTransaction(app, amount);
+              transDetail = initiateTransaction(app, amount);
               setState(() {});
             },
             child: SizedBox(
@@ -112,7 +112,7 @@ class _PaymentPageState extends State<PaymentPage> {
           ),
           Expanded(
             child: FutureBuilder(
-              future: _transaction,
+              future: transDetail,
               builder:
                   (BuildContext context, AsyncSnapshot<UpiResponse> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
