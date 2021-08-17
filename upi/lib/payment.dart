@@ -27,12 +27,12 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   Future<UpiResponse>? _transaction;
-  UpiIndia _upiIndia = UpiIndia();
+  UpiIndia upiIndia = UpiIndia();
   List<UpiApp>? apps;
 
   @override
   void initState() {
-    _upiIndia.getAllUpiApps(mandatoryTransactionId: false).then((value) {
+    upiIndia.getAllUpiApps(mandatoryTransactionId: false).then((value) {
       setState(() {
         apps = value;
       });
@@ -43,7 +43,7 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   Future<UpiResponse> initiateTransaction(UpiApp app, double amount) async {
-    return _upiIndia.startTransaction(
+    return upiIndia.startTransaction(
       app: app,
       receiverUpiId: "ajbaptist18-2@okaxis",
       receiverName: 'John Baptist',
@@ -64,37 +64,33 @@ class _PaymentPageState extends State<PaymentPage> {
         ),
       );
     else
-      return Align(
-        alignment: Alignment.topCenter,
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Wrap(
-            children: apps!.map<Widget>((UpiApp app) {
-              return GestureDetector(
-                onTap: () {
-                  _transaction = initiateTransaction(app, amount);
-                  setState(() {});
-                },
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.memory(
-                        app.icon,
-                        height: 60,
-                        width: 60,
-                      ),
-                      Text(app.name.toUpperCase()),
-                    ],
+      return Wrap(
+        children: apps!.map<Widget>((UpiApp app) {
+          return GestureDetector(
+            onTap: () {
+              _transaction = initiateTransaction(app, amount);
+              setState(() {});
+            },
+            child: Container(
+              height: 100,
+              width: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(60),
+                    child: Image.memory(
+                      app.icon,
+                      height: 60,
+                      width: 60,
+                    ),
                   ),
-                ),
-              );
-            }).toList(),
-          ),
-        ),
+                  Text(app.name.toUpperCase()),
+                ],
+              ),
+            ),
+          );
+        }).toList(),
       );
   }
 
@@ -135,7 +131,7 @@ class _PaymentPageState extends State<PaymentPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("$title: ", style: header),
+          Text("$title: ".toUpperCase(), style: header),
           Flexible(
               child: Text(
             body.toString().toUpperCase(),
@@ -185,10 +181,10 @@ class _PaymentPageState extends State<PaymentPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        displayTransactionData('Transaction Id', txnId),
+                        displayTransactionData('Transaction Id:', txnId),
                         displayTransactionData(
                             'Ref ID:', _upiResponse.transactionId.toString()),
-                        displayTransactionData('Status', status.toUpperCase()),
+                        displayTransactionData('Status:', status.toUpperCase()),
                       ],
                     ),
                   );
