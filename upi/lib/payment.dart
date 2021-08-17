@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:upi/component.dart';
 import 'package:upi/main.dart';
 // import 'package:upi/main.dart';
 import 'package:upi_india/upi_india.dart';
 
 class Payment extends StatefulWidget {
-  final double? amount;
-  final String? string;
-  Payment({this.amount, this.string});
-
   @override
   _PaymentState createState() => _PaymentState();
 }
@@ -18,28 +15,20 @@ class _PaymentState extends State<Payment> {
     return MaterialApp(
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: PaymentPage(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
+class PaymentPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _PaymentPageState createState() => _PaymentPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _PaymentPageState extends State<PaymentPage> {
   Future<UpiResponse>? _transaction;
   UpiIndia _upiIndia = UpiIndia();
   List<UpiApp>? apps;
-
-  TextStyle header =
-      TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.red);
-
-  TextStyle value = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 14,
-  );
 
   @override
   void initState() {
@@ -70,7 +59,7 @@ class _HomePageState extends State<HomePage> {
     else if (apps!.length == 0)
       return Center(
         child: Text(
-          "No apps found to handle transaction.",
+          "NO UPI APPLICATIONS FOUND PLEASE INSTALL THAT.",
           style: header,
         ),
       );
@@ -98,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                         height: 60,
                         width: 60,
                       ),
-                      Text(app.name),
+                      Text(app.name.toUpperCase()),
                     ],
                   ),
                 ),
@@ -167,9 +156,6 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
-            height: 250,
-          ),
           Expanded(
             child: displayUpiApps(),
           ),
@@ -189,16 +175,14 @@ class _HomePageState extends State<HomePage> {
                     );
                   }
 
-                  // If we have data then definitely we will have UpiResponse.
-                  // It cannot be null
                   UpiResponse _upiResponse = snapshot.data!;
 
-                  // Data in UpiResponse can be null. Check before printing
-                  String txnId = _upiResponse.transactionId ?? 'N/A';
-                  String resCode = _upiResponse.responseCode ?? 'N/A';
-                  String txnRef = _upiResponse.transactionRefId ?? 'N/A';
-                  String status = _upiResponse.status ?? 'N/A';
-                  String approvalRef = _upiResponse.approvalRefNo ?? 'N/A';
+                  String txnId = _upiResponse.transactionId ?? 'NOT FOUND';
+                  String resCode = _upiResponse.responseCode ?? 'NOT FOUND';
+                  String txnRef = _upiResponse.transactionRefId ?? 'NOT FOUND';
+                  String status = _upiResponse.status ?? 'NOT FOUND';
+                  String approvalRef =
+                      _upiResponse.approvalRefNo ?? 'NOT FOUND';
                   _checkTxnStatus(status);
 
                   return Padding(
