@@ -190,7 +190,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   );
                 } else
                   return Center(
-                    child: Text('TRY AGAIN'),
+                    child: Text('PLEASE SELECT YOUR UPI APPLICATION'),
                   );
               },
             ),
